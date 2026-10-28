@@ -1,0 +1,116 @@
+@import "tailwindcss";
+@import "@fontsource-variable/instrument-sans";
+
+/*
+ * Bluegum tokens. Greens taken from eucalyptus leaves; the amber "approve"
+ * colour is reserved for one thing only: asking the customer to authorise a
+ * change to their account.
+ */
+:root {
+  color-scheme: light;
+  --page: #f1f4f0;
+  --surface: #ffffff;
+  --ink: #132a25;
+  --ink-soft: #4a5d57;
+  --ink-muted: #6f807a;
+  --line: #d6ded8;
+  --leaf: #2f6e5d;
+  --leaf-strong: #21503f;
+  --leaf-soft: #e1ede7;
+  --on-leaf: #ffffff;
+  --approve-bg: #fdf3dc;
+  --approve-line: #e2bd62;
+  --approve-ink: #5c3f00;
+  --danger: #a83a2c;
+  --shadow: 0 18px 50px -12px rgb(19 42 37 / 0.28);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page: #0e1715;
+    --surface: #15211e;
+    --ink: #e6efeb;
+    --ink-soft: #b2c2bc;
+    --ink-muted: #869690;
+    --line: #2a3a35;
+    --leaf: #7cc1a8;
+    --leaf-strong: #a3d8c4;
+    --leaf-soft: #1d3530;
+    --on-leaf: #0b1a16;
+    --approve-bg: #3a2e12;
+    --approve-line: #8a6a22;
+    --approve-ink: #f6d68a;
+    --danger: #f19a8c;
+    --shadow: 0 18px 50px -12px rgb(0 0 0 / 0.6);
+  }
+}
+
+@theme inline {
+  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-leaf: var(--leaf);
+  --color-leaf-strong: var(--leaf-strong);
+  --color-leaf-soft: var(--leaf-soft);
+  --color-on-leaf: var(--on-leaf);
+  --color-approve-bg: var(--approve-bg);
+  --color-approve-line: var(--approve-line);
+  --color-approve-ink: var(--approve-ink);
+  --color-danger: var(--danger);
+  --shadow-panel: var(--shadow);
+}
+
+/*
+ * Base styles live in a layer so Tailwind utilities (which are in
+ * @layer utilities) can override them. Unlayered CSS would beat every
+ * utility, so `outline-none` on an element would silently do nothing.
+ */
+@layer base {
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--leaf);
+    outline-offset: 2px;
+  }
+}
+
+/* The panel's one entrance. Everything else stays still. */
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+.panel-in {
+  animation: panel-in 180ms ease-out;
+  transform-origin: bottom right;
+}
+
+@keyframes pulse-dot {
+  50% {
+    opacity: 0.3;
+  }
+}
+.thinking-dot {
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
